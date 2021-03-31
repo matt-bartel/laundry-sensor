@@ -1,0 +1,49 @@
+esphome:
+  name: washer
+  platform: ESP8266
+  board: nodemcuv2
+  includes:
+    - VibrationSensor.h
+  libraries:
+    - "Adafruit LIS3DH"
+
+sensor:
+  - platform: custom
+    lambda: |-
+      auto w = new VibrationSensor(0x18, 1.0);
+      App.register_component(w);
+      return {w};
+    sensors:
+      name: "Washer"
+      # accuracy_decimals: 4
+  - platform: custom
+    lambda: |-
+      auto d = new VibrationSensor(0x19, 1.0);
+      App.register_component(d);
+      return {d};
+    sensors:
+      name: "Dryer"
+      # accuracy_decimals: 4
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: !secret hotspot_ssid
+    password: !secret hotspot_password
+
+captive_portal:
+
+# Enable logging
+logger:
+  level: DEBUG
+  esp8266_store_log_strings_in_flash: false
+
+# Enable Home Assistant API
+api:
+  password: !secret ha_password
+
+ota:
+  password: !secret ota_password
