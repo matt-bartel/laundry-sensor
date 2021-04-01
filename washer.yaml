@@ -15,7 +15,6 @@ sensor:
       return {w};
     sensors:
       name: "Washer"
-      # accuracy_decimals: 4
   - platform: custom
     lambda: |-
       auto d = new VibrationSensor(0x19, 1.0);
@@ -23,7 +22,6 @@ sensor:
       return {d};
     sensors:
       name: "Dryer"
-      # accuracy_decimals: 4
 
 wifi:
   ssid: !secret wifi_ssid

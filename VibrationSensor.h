@@ -72,11 +72,6 @@ class VibrationSensor : public PollingComponent, public Sensor {
         fabs(sEvent.acceleration.z - initialZ);
       ESP_LOGD("custom", "force: %f", force);
 
-      // TODO: probably just want to send the state, might be easier to calculate here rather than in ha
-      //       could also pass on the raw value in addition to the state
-      // TODO: home assistant dashboard. not very useful.
-      // publish_state(force);
-
       long now = millis();
       if (force > threshold) {
         lastActive = now;
@@ -116,10 +111,5 @@ class VibrationSensor : public PollingComponent, public Sensor {
       }
 
       publish_state(state);
-
-
-
-
-      // publish_state(42.0);
     }
 };
