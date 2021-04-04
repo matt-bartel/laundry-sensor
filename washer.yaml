@@ -7,17 +7,21 @@ esphome:
   libraries:
     - "Adafruit LIS3DH"
 
+status_led:
+  pin:
+    number: D0
+    inverted: true
 sensor:
   - platform: custom
     lambda: |-
-      auto w = new VibrationSensor(0x18, 1.0);
+      auto w = new VibrationSensor("washer", 0x18, 0.4);
       App.register_component(w);
       return {w};
     sensors:
       name: "Washer"
   - platform: custom
     lambda: |-
-      auto d = new VibrationSensor(0x19, 1.0);
+      auto d = new VibrationSensor("dryer", 0x19, 0.4);
       App.register_component(d);
       return {d};
     sensors:
@@ -41,7 +45,7 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: !secret ha_password
+  password: !secret api_password
 
 ota:
   password: !secret ota_password
